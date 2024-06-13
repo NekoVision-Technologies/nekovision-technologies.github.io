@@ -9,7 +9,7 @@
   <meta name="description" content="Explore our advanced customer feedback tools and QR code solutions designed for seamless review management, product improvement, and event lead capture.">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/blue_logo.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Fonts -->
@@ -305,7 +305,15 @@
               </div>
             </form>
 
-            <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" {}"></iframe>
+            <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) {}"></iframe>
+
+            <script type="text/javascript">
+              $('#gform').on('submit', function(e) {
+                // Show the loading message
+                $('.sent-message').show();
+              });
+            </script>
+            <script type="text/javascript">var submitted=false;</script>
 
           </div><!-- End Contact Form -->
 
