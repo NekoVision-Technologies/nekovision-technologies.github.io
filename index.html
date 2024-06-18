@@ -49,7 +49,7 @@
 
       <a href="#hero" class="logo d-flex align-items-center me-auto">
         <!-- <img src="assets/img/logo.png" alt=""> -->
-        <h1 class="sitename">NekoVision Tech.</h1>
+        <h1 class="sitename">NekoVision Technologies</h1>
       </a>
 
       <nav id="navmenu" class="navmenu">
@@ -273,6 +273,8 @@
           </div>
 
           <div class="col-lg-6">
+
+            <script type="text/javascript">var submitted=false;</script>
             <form name="gform" id="gform" enctype="text/plain" action="https://docs.google.com/forms/d/e/1FAIpQLScGkVt7phlWtsshmUrhNLNnaqJh-rdYQbP9vMjEgzimuU1IwQ/formResponse?"
                   target="hidden_iframe" onsubmit="submitted=true;" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
               
@@ -308,15 +310,21 @@
             <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) {}"></iframe>
 
             <script type="text/javascript">
-              $('#gform').on('submit', function(e) {
-                // Show the loading message
-                $('.sent-message').show();
+              document.addEventListener('DOMContentLoaded', function() {
+                var thisForm = document.getElementById('gform');
+                thisForm.addEventListener('submit', function(event) {
+                  if(submitted == true) {
+                    // If the form has no action attribute, the event will not be triggered
+                    thisForm.querySelector('.loading').classList.remove('d-block');
+                    thisForm.querySelector('.error-message').classList.remove('d-block');
+                    thisForm.querySelector('.sent-message').classList.add('d-block');
+                  }
+                });
               });
             </script>
-            <script type="text/javascript">var submitted=false;</script>
 
           </div><!-- End Contact Form -->
-
+  
         </div>
 
       </div>
