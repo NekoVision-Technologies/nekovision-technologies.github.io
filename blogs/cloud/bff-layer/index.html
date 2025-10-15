@@ -104,14 +104,51 @@
                         <li><u>Access Control:</u> Rule based access control for different department of seller's organization based on Master Product List management, Price Manager, Inventory Manager and Order Fulfillment Manager</li>
                       </ul> 
                     </li>
-                    <li>3rd Party Logistics Vendor Frontend</li>
-                    <li>Customer Support/Admin Frontend</li>
+                    <li>
+                      <b>3rd Party Logistics Vendor Frontend:</b>
+                      <ul>
+                        <li><u>Functionality:</u> User can update orders, view orders assigned to them. Chat with customer who has made the order</li> 
+                        <li><u>Data Scope:</u> Access to orders allocated to them and user information.</li>
+                        <li><u>Access Control:</u> Rule based access control for types of users like Dispatch Manager, Delivery Agent, etc</li>
+                      </ul> 
+                    </li>
+                    <li>
+                      <b>Customer Support/Admin Frontend:</b>
+                      <ul>
+                        <li><u>Functionality:</u> User can manage all the entities to solve the customer queries</li> 
+                        <li><u>Data Scope:</u> Everything except sensitive individual user information.</li>
+                        <li><u>Access Control:</u> Rule based access control for different types of support agent - Order Fulfillment, Refunds, Product Listing, etc.</li>
+                      </ul> 
+                    </li>
                   </ol>
 
                   All of these frontends have different scope of accessible data, different rules for access control, require different attributes/models.<br><br>
 
                   Lets assume the architecture to be:
                   <img style="width: 100%;" src="/blogs/cloud/bff-layer/assets/diagrams/non-bff-architecture.svg"> 
+                  <br>
+                  <br>
+
+                  <h4>In this scenario we face the following challenges:</h4>
+                  <ul>
+                    <li>
+                      Frontend Orchestration of requests
+                      <ul>
+                        <li>
+                          Multiple network calls over unstable/unreliable connection.
+                        </li>
+                        <li>
+                          Client side Data Massaging.
+                        </li>
+                        <li>
+                          Transmission of unwanted attributes.
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      Service level configuration for complex rule based access and data filtering.
+                    </li>
+                  </ul>
                 </p>
               </div>
             </div>
