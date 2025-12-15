@@ -150,6 +150,73 @@
                     </li>
                   </ul>
                 </p>
+                <h4>Introducing the BFF Layer</h4>
+                <p>
+                  BFF Layer is the layer between the Frontend (Presentation Layer) and the Backend - designed with what would have been Frontend specific orchestration and data processing responsibilities.
+                  An application can have multiple BFF supporting dedicated frontends.
+                </p>
+                Lets introduce the BFF Layer in our architecture:
+                <img style="width: 100%;" src="/blogs/cloud/bff-layer/assets/diagrams/bff-architecture.svg">
+                <br><br>
+                <hr>
+                <br><br>
+                <h2>Addressing the challenges:</h2>
+                  <h3>1. Frontend Orchestration</h3>
+                    <h4>1.1 Multiple network calls over unstable/unreliable connection.</h4>
+                    <h5>Scenario implementing a product page</h5>
+
+                    Let's assume we need to show 3 primary information on the product page:
+                    <ol>
+                    <li><u>Product Information</u> - Name, Dimensions, Directions to Use, etc. from product cluster.</li>
+                    <li><u>Product Price</u> - Current Product price from the product cluster.</li>
+                    <li><u>User's order history of the product</u> - List the orders placed by the user along with date of order from the order and fulfilment cluster.</li>
+                    </ol>
+                    Lets compare how the approach would differ for request orchestration without the BFF and with the BFF layer.
+                    <br><br>
+                    <table>
+                      <th>
+                        <thead>
+                          <tr>
+                            <th>
+                              <h5>The non-BFF Layer way</h5>
+                            </th>
+                            <th>
+                              <h5>The BFF Layer way</h5>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <ol>
+                                <li>The frontend sends 3 individual requests parallely, the response has to be collected and presented on the frontend.</li>
+                                <li>If any of the three request fails, frontend has to handle the scenario by showing the error messages/screen.</li>
+                                <li>The network between the client and the API gateway is considered unreliable as compared to server-server network connection. Unreliable latency, failure rates and disconnects are likely. Here we will be making 3 API calls over such unreliable network.</li>
+                              </ol>
+                            </td>
+                            <td>
+                              <ol>
+                                <li>The frontend sends 1 individual request, BFF layer customized specifically for the application, fetches the information from the 3 service level calls, combines the response and sends it back to the frontend.</li>
+                                <li>Since the service layer calls are handled by the BFF layer, it can fail-fast with implementation of a circuit-breaker and can substitute response from cache as well.</li>
+                                <li>There is only one API call made from the client to the BFF Layer over the unreliable network.</li>
+                              </ol>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <img style="width: 100%;  max-height: 1080px;" src="/blogs/cloud/bff-layer/assets/diagrams/multi-network-calls-non-bff.svg">
+                            </td>
+                            <td>
+                              <img style="width: 100%; max-height: 1080px;" src="/blogs/cloud/bff-layer/assets/diagrams/multi-network-calls-bff.svg">
+                            </td>
+                          </tr>
+                        </tbody>
+                      </th>  
+                    </table>
+                  <h4>1.2 Client Side Data Massaging</h4>  
+                  <!-- Show example of the price multiplication -->
+                  <h4>1.3 Transmission on unwanted attributes</h4>
+                  <!-- Show example of Admin portal needing some information and 3PL app needing some information - Maybe showing product orders or sensitive information-->
               </div>
             </div>
           </div>
