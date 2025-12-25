@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% include head.html %}
+  {% assign body_class = page.body_class %}
+  {% if body_class == nil or body_class == '' %}
+    {% if page.layout == 'blog_index' or page.layout == 'post' %}
+      {% assign body_class = 'blog-page' %}
+    {% else %}
+      {% assign body_class = 'index-page' %}
+    {% endif %}
+  {% endif %}
+  <body class="{{ body_class }}">
+    {% include header.html %}
+
+    <main class="main">
+      {{ content }}
+    </main>
+
+    {% include footer.html %}
+
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    {% include scripts.html %}
+  </body>
+</html>
