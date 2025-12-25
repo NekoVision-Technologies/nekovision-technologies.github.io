@@ -61,6 +61,81 @@
   });
 
   /**
+   * Theme toggle (light/dark)
+   */
+  const themeToggleButtons = Array.from(document.querySelectorAll('.theme-toggle'));
+  const themeToggleIcons = themeToggleButtons
+    .map((btn) => btn.querySelector('i'))
+    .filter(Boolean);
+
+  const applyTheme = (mode) => {
+    const body = document.body;
+    const root = document.documentElement;
+    const isDark = mode === 'dark';
+    [body, root].forEach((el) => el.classList.toggle('theme-dark', isDark));
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    root.dataset.theme = isDark ? 'dark' : 'light';
+    root.style.colorScheme = isDark ? 'dark' : 'light';
+
+    themeToggleIcons.forEach((icon) => {
+      icon.classList.toggle('bi-moon-stars', !isDark);
+      icon.classList.toggle('bi-sun', isDark);
+    });
+  };
+
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const storedTheme = localStorage.getItem('theme');
+  applyTheme(storedTheme ?? (prefersDark ? 'dark' : 'light'));
+
+  themeToggleButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const nextMode = document.body.classList.contains('theme-dark') ? 'light' : 'dark';
+      applyTheme(nextMode);
+    });
+  });
+
+  /**
+   * Prefetch next pages on hover/focus to reduce navigation delay.
+   */
+  const canPrefetch = (() => {
+    try {
+      const link = document.createElement('link');
+      if (link.relList && link.relList.supports && link.relList.supports('prefetch')) return true;
+    } catch (e) {
+      return true; // assume support if detection fails (older browsers)
+    }
+    return true; // fall back to attempting prefetch
+  })();
+  const prefetchCache = new Set();
+
+  const prefetchLink = (href, anchor) => {
+    if (!href || href.startsWith('#')) return;
+    if (anchor && anchor.dataset.noPrefetch === 'true') return;
+    const url = new URL(href, window.location.href);
+    if (url.origin !== window.location.origin) return;
+    if (['mailto:', 'tel:'].includes(url.protocol)) return;
+    const samePage = url.pathname === window.location.pathname && url.search === window.location.search;
+    if (samePage) return;
+    const normalized = url.href;
+    if (prefetchCache.has(normalized)) return;
+
+    prefetchCache.add(normalized);
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.href = normalized;
+    link.as = 'document';
+    document.head.appendChild(link);
+  };
+
+  if (canPrefetch) {
+    document.querySelectorAll('a[href]').forEach((anchor) => {
+      const handler = () => prefetchLink(anchor.href, anchor);
+      anchor.addEventListener('pointerenter', handler, { once: true });
+      anchor.addEventListener('focus', handler, { once: true });
+    });
+  }
+
+  /**
    * Scroll top button
    */
   let scrollTop = document.querySelector('.scroll-top');
@@ -95,18 +170,6 @@
   window.addEventListener('load', aosInit);
 
   /**
-   * Initiate glightbox
-   */
-  const glightbox = GLightbox({
-    selector: '.glightbox'
-  });
-
-  /**
-   * Initiate Pure Counter
-   */
-  new PureCounter();
-
-  /**
    * Frequently Asked Questions Toggle
    */
   document.querySelectorAll('.faq-item h3, .faq-item .faq-toggle').forEach((faqItem) => {
@@ -114,50 +177,6 @@
       faqItem.parentNode.classList.toggle('faq-active');
     });
   });
-
-  /**
-   * Init isotope layout and filters
-   */
-  document.querySelectorAll('.isotope-layout').forEach(function(isotopeItem) {
-    let layout = isotopeItem.getAttribute('data-layout') ?? 'masonry';
-    let filter = isotopeItem.getAttribute('data-default-filter') ?? '*';
-    let sort = isotopeItem.getAttribute('data-sort') ?? 'original-order';
-
-    let initIsotope;
-    imagesLoaded(isotopeItem.querySelector('.isotope-container'), function() {
-      initIsotope = new Isotope(isotopeItem.querySelector('.isotope-container'), {
-        itemSelector: '.isotope-item',
-        layoutMode: layout,
-        filter: filter,
-        sortBy: sort
-      });
-    });
-
-    isotopeItem.querySelectorAll('.isotope-filters li').forEach(function(filters) {
-      filters.addEventListener('click', function() {
-        isotopeItem.querySelector('.isotope-filters .filter-active').classList.remove('filter-active');
-        this.classList.add('filter-active');
-        initIsotope.arrange({
-          filter: this.getAttribute('data-filter')
-        });
-        if (typeof aosInit === 'function') {
-          aosInit();
-        }
-      }, false);
-    });
-
-  });
-
-  /**
-   * Init swiper sliders
-   */
-  function initSwiper() {
-    document.querySelectorAll('.swiper').forEach(function(swiper) {
-      let config = JSON.parse(swiper.querySelector('.swiper-config').innerHTML.trim());
-      new Swiper(swiper, config);
-    });
-  }
-  window.addEventListener('load', initSwiper);
 
   /**
    * Correct scrolling position upon page load for URLs containing hash links.

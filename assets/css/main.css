@@ -24,6 +24,7 @@
   --heading-color: #012970; /* Color for headings, subheadings and title throughout the website */
   --accent-color: #4154f1; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
   --contrast-color: #ffffff; /* The contrast color is used for elements when the background color is one of the heading, accent, or default colors. Its purpose is to ensure proper contrast and readability when placed over these more dominant colors */
+  --hero-bg: radial-gradient(120% 100% at 15% 20%, rgba(65, 84, 241, 0.14), transparent 45%), radial-gradient(140% 120% at 85% 10%, rgba(13, 23, 52, 0.08), transparent 40%), linear-gradient(140deg, #f3f6ff 0%, #ffffff 45%, #eef2ff 100%), url('../img/hero-bg.png');
 }
 
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
@@ -35,6 +36,24 @@
   --nav-dropdown-hover-color: #4154f1; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
 }
 
+/* Dark theme overrides */
+html.theme-dark,
+body.theme-dark {
+  --background-color: #0c1024;
+  --default-color: #cfd8f6;
+  --heading-color: #eef2ff;
+  --accent-color: #7dc4ff;
+  --contrast-color: #05070f;
+  --nav-color: #e4e9ff;
+  --nav-hover-color: #7dc4ff;
+  --nav-dropdown-background-color: #11172f;
+  --nav-dropdown-color: #cfd8f6;
+  --nav-dropdown-hover-color: #7dc4ff;
+  --hero-bg: radial-gradient(120% 140% at 20% 10%, rgba(125, 196, 255, 0.18), transparent 40%), radial-gradient(120% 120% at 80% 0%, rgba(96, 165, 255, 0.12), transparent 35%), linear-gradient(145deg, #0b1024 0%, #0f172a 40%, #0b1024 100%);
+  color: var(--default-color);
+  background-color: var(--background-color);
+}
+
 /* Smooth scroll */
 :root {
   scroll-behavior: smooth;
@@ -43,6 +62,10 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+html {
+  background-color: var(--background-color);
+}
+
 body {
   color: var(--default-color);
   background-color: var(--background-color);
@@ -78,7 +101,7 @@ h6 {
   background-color: var(--background-color);
   padding: 20px 0;
   transition: all 0.5s;
-  z-index: 997;
+  z-index: 10000;
 }
 
 .header .logo {
@@ -138,13 +161,24 @@ h6 {
 /* Index Page Header
 ------------------------------*/
 .index-page .header {
-  --background-color: rgba(255, 255, 255, 0);
+  background-color: rgba(0, 0, 0, 0);
+  box-shadow: none;
 }
 
 /* Index Page Header on Scroll
 ------------------------------*/
 .index-page.scrolled .header {
-  --background-color: #ffffff;
+  background-color: var(--background-color);
+  box-shadow: 0 10px 36px color-mix(in srgb, var(--default-color), transparent 82%);
+}
+
+.theme-dark.index-page .header {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.theme-dark.index-page.scrolled .header {
+  background-color: color-mix(in srgb, var(--background-color), transparent 5%);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
 }
 
 /*--------------------------------------------------------------
@@ -275,14 +309,14 @@ h6 {
 
   .navmenu ul {
     display: none;
-    position: relative;
-    inset: 60px 0px 0px 0px;
+    position: absolute;
+    inset: 60px 20px 20px 20px;
     padding: 10px 0;
-    margin: 10px;
+    margin: 0;
     border-radius: 6px;
     background-color: var(--nav-dropdown-background-color);
     overflow-y: auto;
-    transition: 0.3s;
+    transition: none;
     z-index: 9998;
     box-shadow: 0px 0px 30px color-mix(in srgb, var(--default-color), transparent 90%);
   }
@@ -360,6 +394,13 @@ h6 {
     overflow: hidden;
   }
 
+  .mobile-nav-active .header,
+  .mobile-nav-active.blog-page .header,
+  .mobile-nav-active.theme-dark.blog-page .header,
+  body.mobile-nav-active .header {
+    backdrop-filter: none !important;
+  }
+
   .mobile-nav-active .mobile-nav-toggle {
     color: #fff;
     position: absolute;
@@ -375,11 +416,26 @@ h6 {
     overflow: hidden;
     inset: 0;
     background: rgba(33, 37, 41, 0.8);
-    transition: 0.3s;
+    transition: none;
+    z-index: 99999;
+    left: 0 !important;
+    right: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    margin: 0 !important;
   }
 
   .mobile-nav-active .navmenu>ul {
     display: block;
+    position: fixed;
+    top: 60px !important;
+    left: 20px !important;
+    right: 20px !important;
+    bottom: auto !important;
+    height: auto;
+    max-height: calc(100vh - 80px);
+    z-index: 99999;
+    margin: 0 !important;
   }
 }
 
@@ -463,7 +519,6 @@ h6 {
   color: var(--default-color);
   background-color: var(--background-color);
   font-size: 14px;
-  padding-bottom: 50px;
   position: relative;
 }
 
@@ -590,6 +645,127 @@ h6 {
   color: var(--accent-color);
   margin-right: 10px;
   transition: 0.3s;
+}
+
+.header .container-xl {
+  gap: 16px;
+}
+
+.blog-page .header {
+  --background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  box-shadow: none;
+}
+
+.theme-dark.blog-page .header {
+  --background-color: rgba(12, 16, 36, 0.9);
+  backdrop-filter: blur(12px);
+}
+
+.blog-page.scrolled .header {
+  box-shadow: 0 10px 36px color-mix(in srgb, var(--default-color), transparent 82%);
+}
+
+.theme-dark.blog-page.scrolled .header {
+  box-shadow: 0 10px 36px rgba(0, 0, 0, 0.55);
+}
+
+.blog-page .main {
+  /* Lift content below fixed navbar */
+  padding-top: 110px;
+}
+
+.theme-toggle {
+  border: none;
+  background: transparent;
+  color: var(--nav-color);
+  padding: 10px;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus {
+  color: var(--nav-hover-color);
+  background-color: color-mix(in srgb, var(--accent-color), transparent 88%);
+  outline: none;
+  transform: scale(1.04);
+}
+
+.theme-dark .theme-toggle {
+  color: var(--contrast-color);
+}
+
+.theme-dark .theme-toggle:hover,
+.theme-dark .theme-toggle:focus {
+  background-color: color-mix(in srgb, var(--accent-color), transparent 80%);
+}
+
+.theme-dark .theme-toggle .bi {
+  color: #ffffff;
+}
+
+.theme-toggle .bi {
+  font-size: 18px;
+  line-height: 1;
+  color: currentColor;
+}
+
+@media (max-width: 1199px) {
+  .navmenu .nav-theme-toggle {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .navmenu .theme-toggle {
+    display: flex;
+    margin: 4px 18px 4px auto;
+  }
+}
+
+/*--------------------------------------------------------------
+# Modals
+--------------------------------------------------------------*/
+.theme-dark .modal-content {
+  background-color: #0f162d;
+  color: #e9edff;
+  border: 1px solid rgba(233, 237, 255, 0.08);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.45);
+}
+
+.theme-dark .modal-header,
+.theme-dark .modal-footer {
+  border-color: rgba(233, 237, 255, 0.08);
+}
+
+.theme-dark .modal-title,
+.theme-dark .modal-body,
+.theme-dark .modal-body p,
+.theme-dark .modal-body li,
+.theme-dark .modal-body h3,
+.theme-dark .modal-body h5 {
+  color: #e9edff;
+}
+
+.theme-dark .btn-close {
+  filter: invert(1) grayscale(100%);
+}
+
+/* Prevent layout shift when Bootstrap modals add padding */
+.modal-open {
+  padding-right: 0 !important;
+}
+
+.modal-open .header,
+.modal-open .fixed-top,
+.modal-open .sticky-top {
+  padding-right: 0 !important;
 }
 
 .footer .social-links a:hover {
@@ -818,8 +994,9 @@ section,
   padding: 80px 0 60px 0;
   display: flex;
   align-items: center;
-  background: url(../img/hero-bg.png) top center no-repeat;
+  background: var(--hero-bg);
   background-size: cover;
+  background-position: center;
 }
 
 .hero h1 {
@@ -1951,6 +2128,282 @@ section,
   }
 }
 
+/*--------------------------------------------------------------
+# Blog Hero + Cards
+--------------------------------------------------------------*/
+.blog-hero-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--background-color), transparent 6%);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 85%);
+  box-shadow: 0 18px 48px color-mix(in srgb, var(--default-color), transparent 82%);
+  min-height: 240px;
+}
+
+.blog-hero-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(3, 7, 18, 0.82), rgba(12, 30, 58, 0.5));
+  z-index: 1;
+  pointer-events: none;
+}
+
+.blog-hero-media {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: saturate(1.05);
+  z-index: 0;
+}
+
+.blog-hero-body {
+  position: relative;
+  padding: 48px 40px;
+  max-width: 860px;
+  z-index: 2;
+  color: #f5f7ff;
+}
+
+.blog-hero-body h1,
+.blog-hero-body p,
+.blog-hero-body .text-muted {
+  color: #f5f7ff;
+}
+
+.blog-hero-body .text-muted {
+  color: color-mix(in srgb, #f5f7ff, transparent 10%) !important;
+  font-weight: 600;
+}
+
+/* Force hero metadata to stay bright over the banner image even when Bootstrap's .text-muted uses !important */
+.blog-hero-card .text-muted {
+  color: #f5f7ff !important;
+  --bs-text-opacity: 1;
+}
+
+.blog-hero-body .badge {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #0c1327;
+  border: 1px solid rgba(255, 255, 255, 0.92);
+}
+
+/* Note callouts inside posts */
+.note-tip {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-left: 5px solid #6c757d;
+  color: #1a1d2a;
+}
+
+body.theme-dark .note-tip {
+  background-color: rgba(26, 32, 54, 0.75);
+  border-left-color: #9ab5ff;
+  color: #e9edff;
+}
+
+/* Generic content tables */
+.content-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.06);
+  background: #ffffff;
+  color: #0c1327;
+}
+
+.content-table thead tr {
+  background-color: var(--heading-color);
+  color: #ffffff;
+  text-align: left;
+}
+
+.content-table th,
+.content-table td {
+  padding: 12px 15px;
+}
+
+.content-table tbody tr {
+  border-bottom: 1px solid #dde1eb;
+}
+
+.content-table tbody tr:nth-of-type(even) {
+  background-color: #f6f7fb;
+}
+
+body.theme-dark .content-table {
+  background: rgba(17, 23, 47, 0.9);
+  color: #e9edff;
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.35);
+}
+
+body.theme-dark .content-table thead tr {
+  background-color: #1f2d4f;
+  color: #f7f9ff;
+}
+
+body.theme-dark .content-table tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+body.theme-dark .content-table tbody tr:nth-of-type(even) {
+  background-color: rgba(31, 45, 79, 0.45);
+}
+
+.blog-card {
+  overflow: hidden;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--background-color), transparent 0%);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 86%);
+  color: var(--default-color);
+}
+
+.blog-card-thumb {
+  height: 190px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.blog-card-thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0.35) 100%);
+}
+
+.blog-card .card-title a {
+  color: var(--heading-color);
+}
+
+.blog-card .card-title a:hover {
+  color: var(--accent-color);
+}
+
+.blog-card .card-text,
+.blog-card .text-muted,
+.blog-card .text-uppercase {
+  color: var(--default-color);
+}
+
+.accent-pill {
+  display: inline-flex;
+  width: 34px;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent-color), color-mix(in srgb, var(--accent-color), transparent 35%));
+}
+
+.card .small,
+.card .text-muted {
+  color: color-mix(in srgb, var(--default-color), transparent 20%);
+}
+
+body.theme-dark .card .small,
+body.theme-dark .card .text-muted {
+  color: color-mix(in srgb, #e9edff, transparent 30%);
+}
+
+.glass-surface {
+  background: color-mix(in srgb, var(--background-color), transparent 6%);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 86%);
+  border-radius: 14px;
+  padding: 28px 32px;
+  box-shadow: 0 14px 38px color-mix(in srgb, var(--default-color), transparent 86%);
+}
+
+.blog-article {
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--background-color), transparent 4%);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 86%);
+  box-shadow: 0 14px 38px color-mix(in srgb, var(--default-color), transparent 86%);
+}
+
+.blog-content img {
+  border-radius: 10px;
+  box-shadow: 0 10px 32px color-mix(in srgb, var(--default-color), transparent 82%);
+}
+
+.blog-page .blog-content,
+.blog-page .blog-article,
+.blog-page .glass-surface {
+  color: var(--default-color);
+}
+
+@media (max-width: 767px) {
+  .blog-hero-body {
+    padding: 32px 24px;
+  }
+
+  .blog-card-thumb {
+    height: 160px;
+  }
+}
+
+body.theme-dark .card,
+body.theme-dark .blog-hero-card,
+body.theme-dark .blog-card {
+  background-color: rgba(17, 23, 47, 0.82);
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+body.theme-dark .glass-surface,
+body.theme-dark .blog-article {
+  background-color: rgba(17, 23, 47, 0.85);
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+body.theme-dark .blog-hero-card::after {
+  background: linear-gradient(135deg, rgba(4, 8, 20, 0.78), rgba(7, 17, 36, 0.55));
+}
+
+body.theme-dark .badge.bg-dark-subtle {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  color: #e7edff !important;
+}
+
+body.theme-dark .blog-card .card-title a,
+body.theme-dark .blog-card .card-text,
+body.theme-dark .blog-card .text-muted,
+body.theme-dark .blog-card .text-uppercase,
+body.theme-dark .glass-surface,
+body.theme-dark .blog-article,
+body.theme-dark .blog-content {
+  color: #e9edff;
+}
+
+body.theme-dark .blog-card .text-muted,
+body.theme-dark .blog-hero-body .text-muted {
+  color: color-mix(in srgb, #e9edff, transparent 25%);
+}
+
+body.theme-dark .blog-hero-body .badge {
+  background-color: rgba(255, 255, 255, 0.14);
+  color: #f5f7ff;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+body.theme-dark #blogs,
+body.theme-dark .blog {
+  color: #e9edff;
+}
+
+body.theme-dark #blogs .text-muted {
+  color: color-mix(in srgb, #e9edff, transparent 25%) !important;
+}
+
+body.theme-dark #blogs .badge.bg-secondary-subtle,
+body.theme-dark #blogs .badge.bg-dark-subtle {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  color: #e9edff !important;
+}
 /*--------------------------------------------------------------
 # Blog Posts Section
 --------------------------------------------------------------*/
