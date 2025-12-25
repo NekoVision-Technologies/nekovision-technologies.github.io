@@ -1,0 +1,44 @@
+---
+layout: default
+---
+
+<div id="blogs" class="blog section pt-5">
+  <div class="container py-4">
+    <div class="row mb-4">
+      <div class="col-12 col-lg-8">
+        <p class="text-uppercase text-muted fw-semibold small mb-2">Insights & Updates</p>
+        <h1 class="mb-2">Engineering, Cloud, and Product Notes</h1>
+        <p class="text-muted mb-0">Stories about how we build, scale, and ship—captured as concise guides and deep dives.</p>
+      </div>
+    </div>
+
+    {% assign sorted_posts = site.posts | sort: 'date' | reverse %}
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-4">
+      {% for post in sorted_posts %}
+      {% assign post_image = post.thumbnail | default: post.image | default: '/assets/img/hero-bg.png' %}
+      <div class="col">
+        <article class="card blog-card h-100 shadow-sm border-0">
+          <div class="blog-card-thumb" style="background-image: linear-gradient(135deg, rgba(12, 18, 36, 0.35), rgba(12, 18, 36, 0.55)), url('{{ post_image | relative_url }}');"></div>
+          <div class="card-body d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              {% if post.categories and post.categories.size > 0 %}
+              <span class="badge bg-dark-subtle text-uppercase fw-semibold px-3 py-2 rounded-pill">{{ post.categories | join: ', ' | capitalize }}</span>
+              {% else %}
+              <span class="badge bg-secondary-subtle">General</span>
+              {% endif %}
+              <span class="text-muted small d-flex align-items-center gap-2"><i class="bi bi-calendar3"></i>{{ post.date | date: "%b %-d, %Y" }}</span>
+            </div>
+            <h5 class="card-title mb-2"><a class="stretched-link text-decoration-none" href="{{ post.url | relative_url }}">{{ post.title }}</a></h5>
+            <p class="card-text text-muted mb-3">{{ post.description | default: post.excerpt | strip_html | truncate: 150 }}</p>
+            <div class="d-flex align-items-center gap-2 text-uppercase small fw-semibold text-muted">
+              <span class="accent-pill"></span>
+              <span>Read story</span>
+            </div>
+          </div>
+        </article>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>

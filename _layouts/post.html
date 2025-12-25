@@ -1,0 +1,39 @@
+---
+layout: default
+---
+
+<div id="blog-post" class="blog pt-5">
+  <div class="container">
+    {% assign hero_image = page.image | default: page.thumbnail | default: '/assets/img/hero-bg.png' %}
+    {% assign hero_text = page.hero_text_color | default: '#f7f9ff' %}
+    <div class="blog-hero-card mb-4">
+      <div class="blog-hero-media" style="background-image: linear-gradient(135deg, rgba(8, 12, 26, 0.62), rgba(12, 38, 72, 0.5)), url('{{ hero_image | relative_url }}');"></div>
+      <div class="blog-hero-body">
+        <p class="text-muted small mb-2 d-flex flex-wrap align-items-center gap-2">
+          <span class="d-inline-flex align-items-center gap-1"><i class="bi bi-calendar3"></i>{{ page.date | date: "%B %d, %Y" }}</span>
+          {% if page.categories and page.categories.size > 0 %}
+          <span class="badge bg-dark-subtle text-uppercase fw-semibold px-3 py-2 rounded-pill">{{ page.categories | join: ', ' | capitalize }}</span>
+          {% endif %}
+        </p>
+        <h1 class="mb-3">{{ page.title }}</h1>
+        {% if page.description %}<p class="lead text-muted mb-0">{{ page.description }}</p>{% endif %}
+      </div>
+    </div>
+
+    <div class="row gy-4 mb-5">
+      {% if page.wrap_in_card == false %}
+      <div class="col-12 blog-content glass-surface">
+        {{ content }}
+      </div>
+      {% else %}
+      <div class="col-12">
+        <article class="card blog-article shadow-sm border-0">
+          <div class="card-body blog-content">
+            {{ content }}
+          </div>
+        </article>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

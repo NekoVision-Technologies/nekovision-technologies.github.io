@@ -1,0 +1,58 @@
+title: NekoVision Technologies
+email: nekovision.technologies@gmail.com
+description: >-
+  Explore our advanced customer feedback tools and QR code solutions designed for
+  seamless review management, product improvement, and event lead capture.
+keywords: >-
+  review collection and Analysis, Instagram, customer feedback tools, review
+  management system, QR code solutions, event lead capture, product improvement
+  software
+url: https://nekovision.in
+baseurl: ""
+cronitor_client_key: "2bad69e0932d0673bc9be087d7d5b516"
+logo: /assets/img/blue_logo.png
+image: /assets/img/blue_logo.png
+social:
+  name: NekoVision Technologies
+  links:
+    - https://nekovision.in
+
+permalink: pretty
+
+collections:
+  posts:
+    output: true
+    permalink: /blogs/:categories/:slug/
+
+plugins:
+  - jekyll-seo-tag
+
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: post
+      image: /assets/img/blue_logo.png
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: default
+      body_class: index-page
+
+sass:
+  style: compressed
+
+markdown: kramdown
+kramdown:
+  input: GFM
+
+timezone: UTC
+
+exclude:
+  - vendor
+  - node_modules
+  - README.md
+  - Gemfile.lock
+  - .gitignore
