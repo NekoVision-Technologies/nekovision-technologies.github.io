@@ -3,8 +3,8 @@ title: "Security Is a Development Practice, Not a Tool"
 description: "Security is not a product you buy, but a discipline embedded into design, coding, testing, and operations to build systems resilient by design."
 categories: [security]
 permalink: /blogs/security/secure-development-practice/
-thumbnail: /assets/blogs/secure/secure-development-practice/thumbnail.png
-image: /assets/blogs/secure/secure-development-practice/thumbnail.png
+thumbnail: /assets/blogs/secure-development-practice/thumbnail.png
+image: /assets/blogs/secure-development-practice/thumbnail.png
 keywords: secure development lifecycle, shift security left, security culture, secure coding practices, security vs tools
 date: 2026-02-09
 wrap_in_card: false
