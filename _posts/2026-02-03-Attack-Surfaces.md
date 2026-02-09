@@ -3,8 +3,8 @@ title: "Understanding Attack Surfaces: Mapping Real Points of Exposure"
 description: "Attack surfaces define all possible points of exposure in a system. Learn how to identify, minimize, and manage inputs, APIs, configurations, and abuse patterns to build resilient security by design."
 categories: [security]
 permalink: /blogs/security/understanding-attack-surfaces/
-thumbnail: /assets/blogs/secure/understanding-attack-surfaces-thumbnail.png
-image: /assets/blogs/secure/understanding-attack-surfaces-thumbnail.png
+thumbnail: /assets/blogs/attack-surface/thumbnail.png
+image: /assets/blogs/attack-surface/thumbnail.png
 keywords: attack surface, security exposure, secure development lifecycle, threat modeling, API security, authentication vs authorization, security misconfigurations, designing for abuse
 date: 2026-02-03
 wrap_in_card: false
