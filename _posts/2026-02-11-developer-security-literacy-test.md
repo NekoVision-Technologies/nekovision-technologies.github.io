@@ -2,7 +2,6 @@
 title: "Are Your Developers Security Illiterate?"
 description: "A blunt, manager-friendly security literacy test that exposes whether your developers truly understand secure coding, supply chain risks, data protection, and modern security practices."
 categories: [security]
-permalink: /blogs/security/developer-security-literacy-test/
 thumbnail: /assets/blogs/developer-security-literacy/thumbnail.png
 image: /assets/blogs/developer-security-literacy/thumbnail.png
 keywords: developer security literacy, secure coding fundamentals, security awareness for developers, supply chain security, password reuse risks, secure SDLC, security for engineering managers, shift security left, application security basics
