@@ -6,10 +6,10 @@ permalink: /blogs/security/developer-security-literacy-test/
 thumbnail: /assets/blogs/developer-security-literacy/thumbnail.png
 image: /assets/blogs/developer-security-literacy/thumbnail.png
 keywords: developer security literacy, secure coding fundamentals, security awareness for developers, supply chain security, password reuse risks, secure SDLC, security for engineering managers, shift security left, application security basics
-date: 2026-02-12
+date: 2026-02-11
 wrap_in_card: false
 hero_text_color: white
---- 
+---
 
 # Are Your Developers Security Illiterate?
 
